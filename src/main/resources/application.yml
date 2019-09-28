@@ -1,11 +1,15 @@
+spring:
+  profiles:
+    active: "local"
+  main:
+    banner-mode: "off"
+
 server.error.include-stacktrace: "never"
 
-aws:
-  region: "us-east-2"
-  username: "app-user"
-  access_key_id: "AKIAZX4PBR7ZB6QPZFCQ"
-  secret_access_key: "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"
-  s3:
-    bucket_name: "lakelab-test-bucket"
-
-
+#aws:
+#  region: "us-east-2"
+#  username: "app-user"
+#  access_key_id: ""
+#  secret_access_key: ""
+#  s3:
+#    bucket_name: "lakelab-test-bucket"
