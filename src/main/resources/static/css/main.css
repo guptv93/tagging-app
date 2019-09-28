@@ -1,7 +1,36 @@
 /*https://codepen.io/vanslooten/pen/eNzoaB*/
 
-@import url('https://fonts.googleapis.com/css?family=Meie+Script|Shadows+Into+Light|Arvo|Monda');
+@import url('https://fonts.googleapis.com/css?family=Cinzel:400&display=swap');
 
-.font_meie_script {
-    font-family: 'Meie Script', cursive;
+#my-img {
+  width: 100%;
 }
+
+.my-font {
+  font-family: 'Cinzel', serif;
+}
+
+.my-capitalize {
+  text-transform: capitalize;
+}
+
+.my-arrow {
+  display: inline-block;
+  font-size: 60px;
+  position: absolute;
+  top: 50%;
+  transform:translate(-50%,-50%);
+}
+
+.my-arrow-parent {
+  position: relative;
+}
+
+.my-arrow-parent a {
+  color: inherit;
+}
+
+a:hover {
+  color: #808080;
+}
+

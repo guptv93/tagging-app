@@ -1,6 +1,23 @@
 {{>layout/header}}
-<div class="container bg-light rounded">
-  <h1 class="font_meie_script">Start Tagging!</h1>
-  <div>{{helloString}}</div>
+<div class="container bg-light p-5">
+  <h1 class="my-font text-center"> Start Tagging! <i class="fa fa-tags" aria-hidden="true"> </i></h1>
+  <br/>
+  <h3 class="my-font text-center"> Folder Name : <span id="folder-name" class="text-primary my-capitalize">{{folderName}}</span></h3>
+  <h3 class="my-font text-center"> Image Index : <span id="image-index" class="text-primary">{{imageIndex}}</span></h3>
+  <div class="row p-5">
+    <div id="prev" class="col-md-4 text-center my-arrow-parent">
+      <a href="#">
+        <i class="fa fa-chevron-left my-arrow" aria-hidden="true"></i>
+      </a>
+    </div>
+    <div class=" col-md-4 text-center">
+      <img id="my-img" class="d-none"/>
+    </div>
+    <div id="next" class="col-md-4 text-center my-arrow-parent">
+      <a href="#">
+        <i class="fa fa-chevron-right my-arrow" aria-hidden="true"></i>
+      </a>
+    </div>
+  </div>
 </div>
-{{>layout/footer}}
+  {{>layout/footer}}

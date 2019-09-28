@@ -1,3 +1,5 @@
+server.error.include-stacktrace: "never"
+
 aws:
   region: "us-east-2"
   username: "app-user"
