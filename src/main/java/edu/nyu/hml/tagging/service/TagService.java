@@ -1,23 +1,28 @@
 package edu.nyu.hml.tagging.service;
 
-import edu.nyu.hml.tagging.config.AWSClientConfig;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import redis.clients.jedis.Jedis;
 
 @Service
 public class TagService {
 
     @Autowired
-    private AWSClientConfig awsClient;
+    private Jedis redisClient;
 
     public List<String> getTags(String folderName) {
-        List<String> tags = new ArrayList<>();
-        tags.add("mother");
-        tags.add("father");
-        tags.add("wardrobe");
-        return tags;
+        Set<String> zSet = redisClient.zrevrange(folderName, 0, -1);
+        return new ArrayList<>(zSet);
+    }
+
+    public void addTags(String folderName, List<String> newTags) {
+        long millis = System.currentTimeMillis();
+        for(String tag : newTags) {
+            redisClient.zadd(folderName, millis++, tag);
+        }
     }
 
 }
