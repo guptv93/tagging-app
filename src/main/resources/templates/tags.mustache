@@ -1,0 +1,25 @@
+<div id="root-tags-div">
+  <div id="add-tags-div" class="mb-5 row justify-content-center">
+    <div class="input-group col-md-4">
+      <input id="add-tags-input" type="text" class="form-control" placeholder="Add Tags (Comma Separated)">
+      <div class="input-group-append">
+        <button id="add-tags-button" class="btn btn-outline-secondary" type="button">
+          <i class="fa fa-plus" aria-hidden="true"></i>
+        </button>
+      </div>
+      <div class="input-group-append">
+        <button id="refresh-tags-button" class="btn btn-outline-secondary" type="button">
+          <i class="fa fa-refresh" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div id="select-tags-div" class="row justify-content-center">
+    {{#tags}}
+    <div class="col-md-1 text-center">
+      <input type="checkbox" id='c-{{.}}' class='chk-btn' />
+      <label for='c-{{.}}'>{{.}}</label>
+    </div>
+    {{/tags}}
+  </div>
+</div>

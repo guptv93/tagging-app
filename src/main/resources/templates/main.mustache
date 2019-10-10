@@ -2,9 +2,12 @@
 <div class="container bg-light p-5">
   <h1 class="my-font text-center"> Start Tagging! <i class="fa fa-tags" aria-hidden="true"> </i></h1>
   <br/>
+
   <h3 class="my-font text-center"> Folder Name : <span id="folder-name" class="text-primary my-capitalize">{{folderName}}</span></h3>
   <h3 class="my-font text-center"> Image Index : <span id="image-index" class="text-primary">{{imageIndex}}</span></h3>
-  <div class="row p-5">
+
+  <!--Images Div-->
+  <div id="image-div" class="row p-5">
     <div id="prev" class="col-md-4 text-center my-arrow-parent">
       <a href="#">
         <i class="fa fa-chevron-left my-arrow" aria-hidden="true"></i>
@@ -19,5 +22,20 @@
       </a>
     </div>
   </div>
+
+  <!-- UserID Div-->
+  <div id="user-id-div" class="row justify-content-center">
+    <div  class="input-group mb-3 col-md-4">
+      <input id="user-id-input" type="text" class="form-control" placeholder="User's NetID">
+      <div class="input-group-append">
+        <span class="input-group-text" id="basic-addon2">@nyu.edu</span>
+      </div>
+    </div>
+  </div>
+  
+  <!--Tags Div-->
+  <div id="tags-div">
+  </div>
+
 </div>
   {{>layout/footer}}
