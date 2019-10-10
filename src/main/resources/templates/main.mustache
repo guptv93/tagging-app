@@ -6,6 +6,37 @@
   <h3 class="my-font text-center"> Folder Name : <span id="folder-name" class="text-primary my-capitalize">{{folderName}}</span></h3>
   <h3 class="my-font text-center"> Image Index : <span id="image-index" class="text-primary">{{imageIndex}}</span></h3>
 
+  <!-- Help and Thumbnail Button -->
+  <div id="back-button-div" class="row justify-content-center">
+    <div class="btn-group mt-2">
+      <a id="thumbnail-button" href="/thumbnails/{{folderName}}/{{imageIndex}}" class="btn btn-secondary">
+        <i class="fa fa-th" aria-hidden="true"></i>
+      </a>
+      <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#help-modal">
+        <i class="fa fa-info" aria-hidden="true"></i>
+      </button>
+    </div>
+  </div>
+  <div class="modal fade" id="help-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Instructions</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          The Next Button also functions as the Submit Button. Therefore, DO NOT use it for navigation. Use the 'index'
+          query-parameter instead. The Previous Button can be used to go back and correct wrongly tagged images. But,
+          remember that a picture is tagged only on clicking the Next Button.
+          <br/><br/>
+          Happy Tagging :)
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!--Images Div-->
   <div id="image-div" class="row p-5">
     <div id="prev" class="col-md-4 text-center my-arrow-parent">
@@ -32,7 +63,7 @@
       </div>
     </div>
   </div>
-  
+
   <!--Tags Div-->
   <div id="tags-div">
   </div>

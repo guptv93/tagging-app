@@ -1,0 +1,24 @@
+{{>layout/header}}
+<div class="container bg-light p-5">
+
+  <!--Back Button-->
+  <div id="back-button-div" class="row justify-content-center">
+    <a href="/app/{{folderName}}?index={{imgId}}" class="btn btn-secondary">
+      Back to Tagging! <i class="fa fa-tags" aria-hidden="true"></i>
+    </a>
+  </div>
+
+
+  <!--Images Div-->
+  <div id="image-div" class="row p-5">
+    {{#imgUrls}}
+      <div class=" col-md-2 text-center mb-3">
+        <img id="my-img" src="{{.}}"/>
+      </div>
+    {{/imgUrls}}
+  </div>
+
+</div>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+</body>
+</html>

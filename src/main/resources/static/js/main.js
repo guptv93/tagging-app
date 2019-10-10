@@ -18,6 +18,7 @@ var app = {
         $img.attr("src", result);
         $img.removeClass("d-none");
         $("#image-index").text(app.currentIndex);
+        $('#thumbnail-button').attr("href", "\\thumbnails\\" + app.folderName + "\\" + app.currentIndex);
       },
       error : function(request, errorType, errorMessage) {
         alert(request.responseJSON.message);
