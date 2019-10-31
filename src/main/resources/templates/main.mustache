@@ -3,12 +3,22 @@
   <h1 class="my-font text-center"> Start Tagging! <i class="fa fa-tags" aria-hidden="true"> </i></h1>
   <br/>
 
-  <h3 class="my-font text-center"> Folder Name : <span id="folder-name" class="text-primary my-capitalize">{{folderName}}</span></h3>
-  <h3 class="my-font text-center"> Image Index : <span id="image-index" class="text-primary">{{imageIndex}}</span></h3>
+  <h3 class="my-font text-center"> Folder Name : <span id="folder-name" class="text-secondary my-capitalize">{{folderName}}</span></h3>
+  <h3 class="my-font text-center"> Image Index : <span id="image-index" class="text-secondary">{{imageIndex}}</span></h3>
+
+  <!-- UserID Div -->
+  <div id="user-id-div" class="row justify-content-center mt-2">
+    <div  class="input-group col-md-2">
+      <input id="user-id-input" type="text" class="form-control" placeholder="NetID">
+      <div class="input-group-append">
+        <span class="input-group-text" id="basic-addon2">@nyu</span>
+      </div>
+    </div>
+  </div>
 
   <!-- Help and Thumbnail Button -->
-  <div id="back-button-div" class="row justify-content-center">
-    <div class="btn-group mt-2">
+  <div id="back-button-div" class="row justify-content-center mt-2">
+    <div class="btn-group">
       <a id="thumbnail-button" href="/thumbnails/{{folderName}}/{{imageIndex}}" class="btn btn-secondary">
         <i class="fa fa-th" aria-hidden="true"></i>
       </a>
@@ -27,9 +37,7 @@
           </button>
         </div>
         <div class="modal-body">
-          The Next Button also functions as the Submit Button. Therefore, DO NOT use it for navigation. Use the 'index'
-          query-parameter instead. The Previous Button can be used to go back and correct wrongly tagged images. But,
-          remember that a picture is tagged only on clicking the Next Button.
+          Use Right and Left arrows just for navigation. Only the Submit Button will actually tag the images.
           <br/><br/>
           Happy Tagging :)
         </div>
@@ -37,8 +45,8 @@
     </div>
   </div>
 
-  <!--Images Div-->
-  <div id="image-div" class="row p-5">
+  <!-- Images Div -->
+  <div id="image-div" class="row mt-4">
     <div id="prev" class="col-md-4 text-center my-arrow-parent">
       <a href="#">
         <i class="fa fa-chevron-left my-arrow" aria-hidden="true"></i>
@@ -54,13 +62,20 @@
     </div>
   </div>
 
-  <!-- UserID Div-->
-  <div id="user-id-div" class="row justify-content-center">
-    <div  class="input-group mb-3 col-md-4">
-      <input id="user-id-input" type="text" class="form-control" placeholder="User's NetID">
-      <div class="input-group-append">
-        <span class="input-group-text" id="basic-addon2">@nyu.edu</span>
+  <!-- Submit Button -->
+  <div id="submit-div" class="row justify-content-center mt-2">
+    <div  class="input-group col-md-2">
+      <button id="submit-button" type="button" class="btn btn-primary btn-block">Submit <i class="fa fa-chevron-right" aria-hidden="true"></i></button>
+    </div>
+  </div>
+
+  <!-- Display Tags Div -->
+  <div id="display-tags-div" class="row justify-content-center mt-2">
+    <div  class="input-group col-md-4">
+      <div class="input-group-prepend">
+        <span class="btn btn-secondary">Tags:</span>
       </div>
+      <input id="display-tags-input" type="text" class="form-control" disabled>
     </div>
   </div>
 

@@ -1,7 +1,5 @@
 spring:
   profiles:
     active: "local"
-#  main:
-#    banner-mode: "off"
 
 server.error.include-stacktrace: "never"

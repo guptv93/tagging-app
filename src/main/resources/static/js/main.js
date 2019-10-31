@@ -5,6 +5,7 @@ var app = {
     app.insertImage(app.currentIndex);
     app.getTags();
     $('.my-arrow-parent').on('click', app.onArrowClick);
+    $('#submit-button').on('click', app.onSubmit);
     $('#tags-div').on('click', '#add-tags-button', app.sendTags);
     $('#tags-div').on('click', '#refresh-tags-button', app.getTags);
   },
@@ -18,6 +19,7 @@ var app = {
         $img.attr("src", result);
         $img.removeClass("d-none");
         $("#image-index").text(app.currentIndex);
+        app.getImageTags();
         $('#thumbnail-button').attr("href", "\\thumbnails\\" + app.folderName + "\\" + app.currentIndex);
       },
       error : function(request, errorType, errorMessage) {
@@ -31,18 +33,53 @@ var app = {
 
   onArrowClick : function(event) {
     event.preventDefault();
+    if(this.id == "prev") {
+      app.changeIndex(false);
+    } else {
+      app.changeIndex(true);
+    };
+  },
+
+  onSubmit : function(event) {
+    event.preventDefault();
     if ($("#user-id-input").val() == "") {
       $("#user-id-input").addClass("is-invalid");
       return;
     } else {
       $("#user-id-input").removeClass("is-invalid");
     }
-    if(this.id == "prev") {
-      app.changeIndex(false);
-    } else {
-      app.changeIndex(true);
+    app.submitTagDocument(app.getSubmitPayload());
+    app.changeIndex(true);
+  },
+
+  submitTagDocument : function(payload) {
+    url = "/imagetag/" + app.folderName + "/" + app.currentIndex;
+    $.ajax(url, {
+      type : 'POST',
+      data : JSON.stringify(payload),
+      contentType : 'application/json',
+      error : app.tagsErrorCallback
+    });
+  },
+
+  getImageTags : function() {
+    url = "/imagetag/" + app.folderName + "/" + app.currentIndex;
+    $.ajax(url, {
+      type : 'GET',
+      success : app.imageTagsSuccessCallback,
+      error : app.tagsErrorCallback
+    });
+  },
+
+  getSubmitPayload : function() {
+    imageUrlSplits = $('#my-img').attr("src").split("?")[0].split("/");
+    fileName = imageUrlSplits[imageUrlSplits.length - 1];
+    payload = {
+      "tags" : app.selectedTags(),
+      "author" : $('#user-id-input').val(),
+      "fileName" : fileName
     };
-    app.updateTags(app.selectedTags());
+    return payload;
   },
 
   changeIndex : function(isNext) {
@@ -78,15 +115,6 @@ var app = {
     });
   },
 
-  updateTags : function(payload) {
-    url = "/tags/" + app.folderName;
-    $.ajax(url, {
-      type : 'PUT',
-      data : JSON.stringify(payload),
-      contentType : 'application/json'
-    });
-  },
-
   selectedTags : function() {
     var tags = [];
     $('input').each(function() {
@@ -105,6 +133,11 @@ var app = {
 
   tagsErrorCallback : function(request, errorType, errorMessage) {
     alert(request.responseJSON.message);
+  },
+
+  imageTagsSuccessCallback : function(result) {
+    $input = $('#display-tags-input');
+    $input.val(result);
   }
 }
 

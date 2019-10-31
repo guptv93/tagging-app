@@ -58,6 +58,11 @@
       <version>1.18.4</version>
       <scope>provided</scope>
     </dependency>
+    <dependency>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+      <version>28.1-jre</version>
+    </dependency>
     <!-- hot swapping, live reload -->
     <dependency>
       <groupId>org.springframework.boot</groupId>

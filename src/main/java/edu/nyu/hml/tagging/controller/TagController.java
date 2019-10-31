@@ -51,4 +51,30 @@ public class TagController {
         tagService.addTags(folderName, tags);
     }
 
+    @ResponseBody
+    @GetMapping("/imagetag/{folderName}/{imgId}")
+    public List<String> getImageTags(
+            @PathVariable("folderName") String folderName, @PathVariable("imgId") int imgId) {
+        try {
+            return tagService.getImageTags(folderName, imgId);
+        } catch(Exception e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException("Couldn't fetch image tags from DynamoDB");
+        }
+    }
+
+    @ResponseBody
+    @PostMapping("/imagetag/{folderName}/{imgId}")
+    public void addImageTags(
+            @PathVariable("folderName") String folderName, @PathVariable("imgId") int imgId,
+            @RequestBody ImageTagDocument tagDoc) {
+        try {
+            tagService.tagImage(folderName, imgId, tagDoc.getFileName(), tagDoc.getAuthor(), tagDoc.getTags());
+            tagService.addTags(folderName, tagDoc.getTags());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException("Couldn't save tags for image id : " + imgId + ". Please try again!");
+        }
+    }
+
 }

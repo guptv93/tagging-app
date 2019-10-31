@@ -15,10 +15,12 @@ import org.springframework.stereotype.Service;
 public class ImageService {
 
     @Autowired
+    private AmazonS3 s3Client;
+
+    @Autowired
     private AWSClientConfig awsClient;
 
     private String getKeyFromIndex(String folderName, int index) {
-        AmazonS3 s3Client = awsClient.getS3Client();
         String bucketName = awsClient.getBucketName();
 
         // Get Correct Key from s3 Response
@@ -42,7 +44,6 @@ public class ImageService {
     }
 
     private String getUrlFromKey(String key) {
-        AmazonS3 s3Client = awsClient.getS3Client();
         String bucketName = awsClient.getBucketName();
 
         // Set the presigned URL to expire after 1 hour.
