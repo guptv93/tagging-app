@@ -3,3 +3,14 @@ spring:
     active: "local"
 
 server.error.include-stacktrace: "never"
+
+aws:
+  region: "us-east-1"
+  username: "tagging-app-user"
+  s3:
+    bucket_name: "tagging-app-bucket"
+  dynamodb:
+    table_name: "ImageTagsTable"
+
+redis:
+  hostname: "tags-cache.2ovrzt.0001.use1.cache.amazonaws.com"

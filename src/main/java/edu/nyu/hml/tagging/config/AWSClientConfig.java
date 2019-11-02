@@ -2,7 +2,6 @@ package edu.nyu.hml.tagging.config;
 
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
-import com.amazonaws.client.builder.AwsClientBuilder;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
@@ -13,7 +12,6 @@ import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 
 @Getter
 @Configuration
@@ -47,23 +45,12 @@ public class AWSClientConfig {
     }
 
     @Bean
-    @Profile("local")
     public DynamoDB setDynamoClientProd() {
         AmazonDynamoDB client =
                 AmazonDynamoDBClientBuilder.standard()
-                    .withCredentials(new AWSStaticCredentialsProvider(this.credProvider()))
-                    .withRegion(Regions.fromName(region))
-                    .build();
-        DynamoDB dynamoClient = new DynamoDB(client);
-        return dynamoClient;
-    }
-
-    @Bean
-    @Profile("prod")
-    public DynamoDB setDynamoClientLocal() {
-        AmazonDynamoDB client = AmazonDynamoDBClientBuilder.standard().withEndpointConfiguration(
-                new AwsClientBuilder.EndpointConfiguration("http://localhost:8000", region))
-                .build();
+                        .withCredentials(new AWSStaticCredentialsProvider(this.credProvider()))
+                        .withRegion(Regions.fromName(region))
+                        .build();
         DynamoDB dynamoClient = new DynamoDB(client);
         return dynamoClient;
     }
