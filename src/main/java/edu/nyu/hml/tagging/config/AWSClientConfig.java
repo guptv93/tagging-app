@@ -5,7 +5,7 @@ import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
-import com.amazonaws.services.dynamodbv2.document.DynamoDB;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import lombok.Getter;
@@ -35,7 +35,7 @@ public class AWSClientConfig {
     }
 
     @Bean
-    public AmazonS3 setS3Client() {
+    public AmazonS3 getS3Client() {
         AmazonS3 s3Client =
             AmazonS3ClientBuilder.standard()
                 .withCredentials(new AWSStaticCredentialsProvider(this.credProvider()))
@@ -45,13 +45,13 @@ public class AWSClientConfig {
     }
 
     @Bean
-    public DynamoDB setDynamoClientProd() {
+    public DynamoDBMapper getDynamoClient() {
         AmazonDynamoDB client =
                 AmazonDynamoDBClientBuilder.standard()
                         .withCredentials(new AWSStaticCredentialsProvider(this.credProvider()))
                         .withRegion(Regions.fromName(region))
                         .build();
-        DynamoDB dynamoClient = new DynamoDB(client);
-        return dynamoClient;
+        DynamoDBMapper dynamoMapper = new DynamoDBMapper(client);
+        return dynamoMapper;
     }
 }

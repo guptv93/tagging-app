@@ -10,9 +10,22 @@ var app = {
     $('#tags-div').on('click', '#refresh-tags-button', app.getTags);
   },
 
+  getUrls : function() {
+    var folderName = app.folderName;
+    var currentIndex = app.currentIndex;
+    return {
+      image : `/image/${folderName}/${currentIndex}`,
+      thumbnails : `/thumbnails/${folderName}/${currentIndex}`,
+      imageTags : `/imagetags/${folderName}/${currentIndex}`,
+      tags : `/tags/${folderName}`
+    };
+  },
+
   insertImage : function(imgId) {
-    url = "/image/" + app.folderName + "/" + imgId;
-    $.ajax(url, {
+    var lastIndex = app.currentIndex;
+    app.currentIndex = imgId;
+    var urls = app.getUrls();
+    $.ajax(urls.image, {
       type : 'GET',
       success : function(result) {
         $img = $('#my-img');
@@ -20,12 +33,12 @@ var app = {
         $img.removeClass("d-none");
         $("#image-index").text(app.currentIndex);
         app.getImageTags();
-        $('#thumbnail-button').attr("href", "\\thumbnails\\" + app.folderName + "\\" + app.currentIndex);
+        $('#thumbnail-button').attr("href", urls.thumbnails);
       },
       error : function(request, errorType, errorMessage) {
         alert(request.responseJSON.message);
-        if(request.responseJSON.message.includes("exceed") ) {
-          app.currentIndex--;
+        if(request.status == 400 ) {
+          app.currentIndex = lastIndex;
         }
       }
     });
@@ -33,11 +46,13 @@ var app = {
 
   onArrowClick : function(event) {
     event.preventDefault();
-    if(this.id == "prev") {
-      app.changeIndex(false);
+    if(this.id == "next") {
+      app.insertImage(parseInt(app.currentIndex)+1);
+    } else if(this.id == "prev" && app.currentIndex != 1) {
+      app.insertImage(app.currentIndex-1);
     } else {
-      app.changeIndex(true);
-    };
+      alert("This is the first image in the folder!");
+    }
   },
 
   onSubmit : function(event) {
@@ -49,11 +64,11 @@ var app = {
       $("#user-id-input").removeClass("is-invalid");
     }
     app.submitTagDocument(app.getSubmitPayload());
-    app.changeIndex(true);
+    app.insertImage(app.currentIndex+1);
   },
 
   submitTagDocument : function(payload) {
-    url = "/imagetag/" + app.folderName + "/" + app.currentIndex;
+    var url = app.getUrls().imageTags;
     $.ajax(url, {
       type : 'POST',
       data : JSON.stringify(payload),
@@ -63,11 +78,11 @@ var app = {
   },
 
   getImageTags : function() {
-    url = "/imagetag/" + app.folderName + "/" + app.currentIndex;
+    var url = app.getUrls().imageTags;
     $.ajax(url, {
       type : 'GET',
       success : app.imageTagsSuccessCallback,
-      error : app.tagsErrorCallback
+      error : app.errorCallback
     });
   },
 
@@ -82,36 +97,23 @@ var app = {
     return payload;
   },
 
-  changeIndex : function(isNext) {
-    if(isNext == false) {
-      if(app.currentIndex == 1) {
-        alert("This is the first image in the folder!");
-      } else {
-        app.currentIndex--;
-      }
-    } else {
-      app.currentIndex++;
-    }
-    app.insertImage(app.currentIndex);
-  },
-
   getTags : function() {
-    url = "/tags/" + app.folderName;
+    var url = app.getUrls().tags;
     $.ajax(url, {
       type : 'GET',
       success : app.tagsSuccessCallback,
-      error : app.tagsErrorCallback
+      error : app.errorCallback
     });
   },
 
   sendTags : function(payload) {
-    url = "/tags/" + app.folderName;
+    var url = app.getUrls().tags;
     $.ajax(url, {
       type : 'POST',
       data : $('#add-tags-input').val(),
       contentType : 'application/json',
       success : app.tagsSuccessCallback,
-      error : app.tagsErrorCallback
+      error : app.errorCallback
     });
   },
 
@@ -131,14 +133,15 @@ var app = {
     $tagsDiv.html(result);
   },
 
-  tagsErrorCallback : function(request, errorType, errorMessage) {
-    alert(request.responseJSON.message);
+  imageTagsSuccessCallback : function(result) {
+    var $input = $('#display-tags-input');
+    $input.val(result);
   },
 
-  imageTagsSuccessCallback : function(result) {
-    $input = $('#display-tags-input');
-    $input.val(result);
+  errorCallback : function(request, errorType, errorMessage) {
+    alert(request.responseJSON.message);
   }
+
 }
 
 $(document).ready(function(){
