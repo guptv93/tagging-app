@@ -7,6 +7,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
+/**
+ * AppExceptionHandler
+ * This class is a place to handle exceptions thrown by various controllers.
+ *
+ * Method annotated ExceptionHander(NoHandlerFoundException) doesn't get called
+ * because Spring isn't configured to throw NoHandlerFoundException exception.
+ */
 @RestControllerAdvice
 public class AppExceptionHandler {
 
